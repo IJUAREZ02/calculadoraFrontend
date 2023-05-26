@@ -1,0 +1,87 @@
+<div class="titulo">
+    <h2>Calculadora de Inversiones</h2>
+</div>
+
+<div class="container posicionamiento">
+
+    <form [formGroup]="datosCalculadora" (ngSubmit)="submit(datosCalculadora.value)">
+
+        <div class="form-group">
+            <label for="inversionInicial">Inversión Inicial $:</label>
+            <input formControlName="inversionInicial" id="inversionInicial" type="text" class="form-control" (input)="validarNumeros($event)" >
+            <div *ngIf="datosCalculadora.controls['inversionInicial'].errors?.['invalidInversionInicial']" class="alert alert-danger">La cantidad inicial es de $1000</div>
+        
+
+        
+        </div>
+
+        <div class="form-group">
+            <label for="aportacionAnual">Aportación Anual $:</label>
+            <input formControlName="aportacionAnual" id="aportacionAnual" type="text" class="form-control" (input)="validarNumeros($event)">
+
+        </div>
+
+        <div class="form-group">
+            <label for="porcentajeIncrementoAnual">% Incremento Anual</label>
+            <input formControlName="porcentajeIncrementoAnual" id="porcentajeIncrementoAnual" type="text"
+                class="form-control" (input)="validarNumeros($event)">
+
+        </div>
+
+        <div class="form-group">
+            <label for="aniosInversion">Años de Inversión</label>
+            <input formControlName="aniosInversion" id="aniosInversion" type="text" class="form-control" (input)="validarNumeros($event)">
+            <div *ngIf="datosCalculadora.controls['aniosInversion'].errors?.['invalidAniosInversion']" class="alert alert-danger">El año debe ser mayor a 0</div>
+      
+        </div>
+
+        <div class="form-group">
+            <label for="rendimientoInversion">% Rendimiento</label>
+            <input formControlName="rendimientoInversion" id="rendimientoInversion" type="text" class="form-control" (input)="validarNumeros($event)">
+            <div *ngIf="datosCalculadora.controls['rendimientoInversion'].errors?.['invalidRendimientoInversion']" class="alert alert-danger">El rendimiento debe ser mayor a 0</div>
+
+        </div>
+
+        <div class="style-button">
+            <button class="btn btn-primary" [disabled]="datosCalculadora.invalid" type="submit">Calcular</button>
+        </div>
+    </form>
+</div>
+
+<div class="container parrafo" [hidden]="mostrarTabla">
+    <p><span>Ganancia por inversión: {{gananciaInversion | currency}}</span></p>
+    <p><span>Monto final: {{montoFinal | currency}} </span></p>
+</div>
+<div class="container" [hidden]="mostrarTabla">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" #tabla1>
+  
+      <ng-container matColumnDef="anio">
+        <th mat-header-cell *matHeaderCellDef> Año </th>
+        <td mat-cell *matCellDef="let element"> {{element.anio}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="saldoInicial">
+        <th mat-header-cell *matHeaderCellDef> Saldo Inicial </th>
+        <td mat-cell *matCellDef="let element"> {{element.saldoInicial | currency}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="aportacion">
+        <th mat-header-cell *matHeaderCellDef> Aportación </th>
+        <td mat-cell *matCellDef="let element"> {{element.aportacion | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="rendimiento">
+        <th mat-header-cell *matHeaderCellDef> Rendimiento</th>
+        <td mat-cell *matCellDef="let element"> {{element.rendimiento | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="saldoFinal">
+        <th mat-header-cell *matHeaderCellDef> Saldo Final </th>
+        <td mat-cell *matCellDef="let element"> {{element.saldoFinal | currency}} </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+  </div>

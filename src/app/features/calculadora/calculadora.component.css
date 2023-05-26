@@ -1,0 +1,30 @@
+.posicionamiento {
+    padding-top: 3%;
+    width: 35%;
+}
+
+
+.style-button {
+
+    text-align: center;
+}
+
+table {
+    width: 100%;
+ }
+
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+
+    text-align: center;
+}
+
+.parrafo {
+    text-align: center;
+    padding-top: 3%;
+}
+
+.titulo {
+    text-align: center;
+    padding-top: 3%;
+}
